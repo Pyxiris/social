@@ -1,0 +1,57 @@
+{
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/gmail.addons.current.message.readonly",
+    "https://www.googleapis.com/auth/script.external_request"
+  ],
+  "gmail": {
+    "name": "Odoo",
+    "logoUrl": "https://raw.githubusercontent.com/odoo/mail-client-extensions/master/outlook/assets/odoo.png",
+    "contextualTriggers": [
+      {
+        "unconditional": {},
+        "onTriggerFunction": "onGmailMessageOpen"
+      }
+    ],
+    "primaryColor": "#875A7B",
+    "secondaryColor": "#00A09D",
+    "openLinkUrlPrefixes": ["*"]
+  },
+  "urlFetchWhitelist": [
+    "https://*.manmanufacturing.com/mail_plugin/log_mail_raw",
+    "https://*.manmanufacturing.com/mail_plugin/get_translations",
+    "https://*.manmanufacturing.com/mail_plugin/partner/get",
+    "https://*.manmanufacturing.com/mail_plugin/log_mail_content",
+    "https://*.manmanufacturing.com/mail_plugin/partner/search",
+    "https://*.manmanufacturing.com/mail_plugin/partner/create",
+    "https://*.manmanufacturing.com/mail_plugin/partner/enrich_and_create_company",
+    "https://*.manmanufacturing.com/mail_plugin/partner/enrich_and_update_company",
+    "https://*.manmanufacturing.com/mail_plugin/lead/create",
+    "https://*.manmanufacturing.com/mail_plugin/ticket/create",
+    "https://*.manmanufacturing.com/mail_plugin/project/search",
+    "https://*.manmanufacturing.com/mail_plugin/project/create",
+    "https://*.manmanufacturing.com/mail_plugin/task/create",
+    "https://*.manmanufacturing.com/web/login",
+    "https://*.manmanufacturing.com/mail_plugin/auth",
+    "https://*.manmanufacturing.com/mail_plugin/auth/access_token",
+    "https://*.manmanufacturing.comacturing.com/mail_plugin/auth/check_version",
+    "https://manmanufacturing.com/mail_plugin/log_mail_raw",
+    "https://manmanufacturing.com/mail_plugin/get_translations",
+    "https://manmanufacturing.com/mail_plugin/partner/get",
+    "https://manmanufacturing.com/mail_plugin/log_mail_content",
+    "https://manmanufacturing.com/mail_plugin/partner/search",
+    "https://manmanufacturing.com/mail_plugin/partner/create",
+    "https://manmanufacturing.com/mail_plugin/partner/enrich_and_create_company",
+    "https://manmanufacturing.com/mail_plugin/partner/enrich_and_update_company",
+    "https://manmanufacturing.com/mail_plugin/lead/create",
+    "https://manmanufacturing.com/mail_plugin/ticket/create",
+    "https://manmanufacturing.com/mail_plugin/project/search",
+    "https://manmanufacturing.com/mail_plugin/project/create",
+    "https://manmanufacturing.com/mail_plugin/task/create",
+    "https://manmanufacturing.com/web/login",
+    "https://manmanufacturing.com/mail_plugin/auth",
+    "https://manmanufacturing.com/mail_plugin/auth/access_token",
+    "https://manmanufacturing.com/mail_plugin/auth/check_version"
+  ]
+}
