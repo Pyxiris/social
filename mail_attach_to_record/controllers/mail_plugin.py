@@ -4,7 +4,6 @@ import email.policy
 import logging
 
 from odoo import http
-from odoo.exceptions import AccessError
 from odoo.http import request
 
 from odoo.addons.mail_plugin.controllers import mail_plugin
@@ -14,20 +13,12 @@ _logger = logging.getLogger(__name__)
 
 class MailPluginController(mail_plugin.MailPluginController):
     @http.route("/mail_plugin/log_mail_raw", type="jsonrpc", auth="outlook", cors="*")
-    def log_mail_raw(self, model, res_id, email_raw):
-        # 1. Find the record (Model + ID)
-        if model not in request.env:
-            return {"error": "Invalid model"}
-
-        record = request.env[model].browse(res_id).exists()
+    def log_mail_raw(self, email_raw):
+        # 1. Find the buffer record
+        buffer_model = request.env["mail.buffer"].sudo()
+        record = buffer_model.search([], limit=1)
         if not record:
-            return {"error": "Record not found"}
-
-        try:
-            record.check_access_rights("write")
-            record.check_access_rule("write")
-        except AccessError:
-            return {"error": "Access denied"}
+            record = buffer_model.create({})
 
         # 2. Parse the raw email
         message = email.message_from_bytes(
@@ -39,7 +30,7 @@ class MailPluginController(mail_plugin.MailPluginController):
         subtype_xmlid = (
             "mail.mt_note" if msg_dict.get("is_internal") else "mail.mt_comment"
         )
-        record.message_post(
+        new_message = record.message_post(
             body=msg_dict.get("body"),
             subject=msg_dict.get("subject"),
             message_type="email",
@@ -52,5 +43,27 @@ class MailPluginController(mail_plugin.MailPluginController):
             message_id=msg_dict.get("message_id"),
             author_id=msg_dict.get("author_id"),
             attachments=msg_dict.get("attachments"),
+        )
+
+        # 4. Notify user
+        # Force inbox notification regardless of user preference
+        partner = request.env.user.partner_id
+        record._notify_thread_by_inbox(
+            new_message,
+            [
+                {
+                    "id": partner.id,
+                    "uid": request.env.user.id,
+                    "notif": "inbox",
+                    "type": "user",
+                }
+            ],
+        )
+        request.env["bus.bus"]._sendone(
+            partner,
+            "mail.plugin.log_mail_raw",
+            {
+                "message_id": new_message.id,
+            },
         )
         return True

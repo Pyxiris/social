@@ -21,17 +21,6 @@ function buildAttachCard(event) {
   var card = CardService.newCardBuilder();
   var section = CardService.newCardSection();
 
-  // Input for Odoo Model
-  var modelInput = CardService.newTextInput()
-    .setFieldName("model")
-    .setTitle("Model Name")
-    .setHint("e.g. crm.lead");
-
-  var idInput = CardService.newTextInput()
-    .setFieldName("res_id")
-    .setTitle("Record ID")
-    .setHint("e.g. 123");
-
   // The Attach Button
   var action = CardService.newAction()
     .setFunctionName("onAttachClick")
@@ -46,8 +35,6 @@ function buildAttachCard(event) {
     .setTextButtonStyle(CardService.TextButtonStyle.FILLED)
     .setOnClickAction(action);
 
-  section.addWidget(modelInput);
-  section.addWidget(idInput);
   section.addWidget(button);
 
   // Logout button for convenience
@@ -62,15 +49,6 @@ function buildAttachCard(event) {
  * Handles the button click to attach the email.
  */
 function onAttachClick(e) {
-  var model = e.formInput.model;
-  var resId = parseInt(e.formInput.res_id);
-
-  if (!model || !resId) {
-    return CardService.newActionResponseBuilder()
-      .setNotification(CardService.newNotification().setText("Please provide both Model and ID."))
-      .build();
-  }
-
   // --- ADD THESE DEFINITIONS ---
   var odooUrl = getOdooServerUrl();
   var odooToken = getAccessToken();
@@ -91,8 +69,6 @@ function onAttachClick(e) {
     jsonrpc: "2.0",
     method: "call",
     params: {
-      model: model,
-      res_id: resId,
       email_raw: base64Content // Send the encoded version
     },
     id: Math.floor(Math.random() * 1000)

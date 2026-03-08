@@ -13,4 +13,12 @@
         "mail_plugin",
     ],
     "installable": True,
+    "data": [
+        "security/ir.model.access.csv",
+    ],
+    "assets": {
+        "web.assets_backend": [
+            "mail_attach_to_record/static/src/js/mail_plugin_notification.js",
+        ],
+    },
 }
