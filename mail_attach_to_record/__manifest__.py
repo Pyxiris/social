@@ -18,7 +18,8 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "mail_attach_to_record/static/src/js/mail_plugin_notification.js",
+            "mail_attach_to_record/static/src/js/mail_buffer_menu.js",
+            "mail_attach_to_record/static/src/xml/mail_buffer_menu.xml",
         ],
     },
 }

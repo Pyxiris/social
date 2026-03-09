@@ -45,22 +45,9 @@ class MailPluginController(mail_plugin.MailPluginController):
             attachments=msg_dict.get("attachments"),
         )
 
-        # 4. Notify user
-        # Force inbox notification regardless of user preference
-        partner = request.env.user.partner_id
-        record._notify_thread_by_inbox(
-            new_message,
-            [
-                {
-                    "id": partner.id,
-                    "uid": request.env.user.id,
-                    "notif": "inbox",
-                    "type": "user",
-                }
-            ],
-        )
+        # 4. Notify user via bus to update systray
         request.env["bus.bus"]._sendone(
-            partner,
+            request.env.user.partner_id,
             "mail.plugin.log_mail_raw",
             {
                 "message_id": new_message.id,

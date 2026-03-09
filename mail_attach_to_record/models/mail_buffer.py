@@ -18,8 +18,8 @@ class MailBuffer(models.Model):
             raise UserError("Message is not in the buffer.")
 
         target = self.env[model].browse(res_id)
-        target.check_access_rights("write")
-        target.check_access_rule("write")
+        target.check_access("write")
+        target.check_access("write")
 
         message.sudo().write(
             {
