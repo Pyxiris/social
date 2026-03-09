@@ -4,6 +4,7 @@
     <t t-name="mail_attach_to_record.MailBufferMenu">
         <div t-att-class="discussSystray.class">
             <Dropdown
+                state="dropdown"
                 menuClass="discussSystray.menuClass"
                 position="'bottom-end'"
                 bottomSheet="false"
