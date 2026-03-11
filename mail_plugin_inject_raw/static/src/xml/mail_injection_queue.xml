@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
 
-    <t t-name="mail_attach_to_record.MailBufferMenu">
+    <t t-name="mail_plugin_inject_raw.MailInjectionQueueMenu">
         <div t-att-class="discussSystray.class">
             <Dropdown
                 state="dropdown"
@@ -10,23 +10,26 @@
                 bottomSheet="false"
                 beforeOpen.bind="beforeOpen"
             >
-                <button class="bg-transparent border-0" aria-label="Mail Buffer">
+                <button
+                    class="bg-transparent border-0"
+                    aria-label="Mail Injection Queue"
+                >
                     <i class="fa fa-lg fa-envelope" role="img" />
                     <span
-                        t-if="mailBufferCounter"
+                        t-if="MailInjectionQueueCounter"
                         class="o-mail-MessagingMenu-counter badge rounded-pill"
                     >
-                        <t t-esc="mailBufferCounter" />
+                        <t t-esc="MailInjectionQueueCounter" />
                     </span>
                 </button>
                 <t t-set-slot="content">
-                    <t t-call="mail.MailBufferMenu.content" />
+                    <t t-call="mail.MailInjectionQueueMenu.content" />
                 </t>
             </Dropdown>
         </div>
     </t>
 
-    <t t-name="mail.MailBufferMenu.content">
+    <t t-name="mail.MailInjectionQueueMenu.content">
         <div t-att-class="`${discussSystray.contentClass} o-mail-MessagingMenu`">
             <div
                 class="o-mail-MessagingMenu-list d-flex flex-column overflow-auto o-scrollbar-thin flex-grow-1 list-group list-group-flush o-scrollbar-thin"
@@ -40,7 +43,7 @@
                 </t>
                 <t t-elif="!state.messages.length">
                     <div class="d-flex justify-content-center py-4 px-2 text-muted">
-                        No buffered emails.
+                        No queued emails.
                     </div>
                 </t>
                 <t t-else="">

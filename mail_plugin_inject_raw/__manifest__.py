@@ -1,8 +1,8 @@
-# Copyright 2026 Pyxiris
+# Copyright 2026 Liam Noonan
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "Mail Attach to Record",
-    "summary": "Use mail client extensions to route emails to odoo records",
+    "name": "Mail Plugin inject raw mail to chatter",
+    "summary": "Use mail client extensions to inject mail to chatter",
     "version": "19.0.1.0.0",
     "author": "Pyxiris, Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -18,8 +18,8 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "mail_attach_to_record/static/src/js/mail_buffer_menu.js",
-            "mail_attach_to_record/static/src/xml/mail_buffer_menu.xml",
+            "mail_plugin_inject_raw/static/src/js/mail_injection_queue.esm.js",
+            "mail_plugin_inject_raw/static/src/xml/mail_injection_queue.xml",
         ],
     },
 }

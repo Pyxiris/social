@@ -14,19 +14,16 @@ _logger = logging.getLogger(__name__)
 class MailPluginController(mail_plugin.MailPluginController):
     @http.route("/mail_plugin/log_mail_raw", type="jsonrpc", auth="outlook", cors="*")
     def log_mail_raw(self, email_raw):
-        # 1. Find the buffer record
-        buffer_model = request.env["mail.buffer"].sudo()
-        record = buffer_model.search([], limit=1)
+        queue_model = request.env["mail.injection_queue"].sudo()
+        record = queue_model.search([], limit=1)
         if not record:
-            record = buffer_model.create({})
+            record = queue_model.create({})
 
-        # 2. Parse the raw email
         message = email.message_from_bytes(
             base64.b64decode(email_raw), policy=email.policy.SMTP
         )
         msg_dict = request.env["mail.thread"].message_parse(message)
 
-        # 3. Post the message to the record's chatter
         subtype_xmlid = (
             "mail.mt_note" if msg_dict.get("is_internal") else "mail.mt_comment"
         )

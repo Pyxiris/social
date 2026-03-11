@@ -6,19 +6,18 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 
-class MailBuffer(models.Model):
-    _name = "mail.buffer"
-    _description = "Mail Buffer"
+class MailInjectionQueue(models.Model):
+    _name = "mail.injection_queue"
+    _description = "Mail Injection Queue"
     _inherit = "mail.thread"
 
     @api.model
     def assign_message(self, message_id, model, res_id):
         message = self.env["mail.message"].browse(message_id)
-        if message.model != "mail.buffer":
-            raise UserError("Message is not in the buffer.")
+        if message.model != "mail.injection_queue":
+            raise UserError(self.env._("Message is not in the queue."))
 
         target = self.env[model].browse(res_id)
-        target.check_access("write")
         target.check_access("write")
 
         message.sudo().write(
@@ -32,7 +31,7 @@ class MailBuffer(models.Model):
     @api.model
     def discard_message(self, message_id):
         message = self.env["mail.message"].browse(message_id)
-        if message.model != "mail.buffer":
-            raise UserError("Message is not in the buffer.")
+        if message.model != "mail.injection_queue":
+            raise UserError(self.env._("Message is not in the queue."))
         message.sudo().unlink()
         return True
