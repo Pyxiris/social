@@ -15,12 +15,13 @@
     "installable": True,
     "data": [
         "security/ir.model.access.csv",
+        "security/mail_injection_queue_security.xml",
     ],
     "assets": {
         "web.assets_backend": [
             "mail_plugin_inject_raw/static/src/js/*.js",
             "mail_plugin_inject_raw/static/src/xml/*.xml",
-            "mail_plugin_inject_raw/static/src/scss/*.scss",
+            "mail_plugin_inject_raw/static/src/scss/mail_injection_queue.scss",
         ],
     },
 }

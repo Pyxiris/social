@@ -48,11 +48,8 @@ export class MailInjectionQueueMenu extends Component {
         this.state.isLoading = true;
         try {
             this.state.messages = await this.orm.searchRead(
-                "mail.message",
-                [
-                    ["model", "=", "mail.injection_queue"],
-                    ["create_uid", "=", user.userId],
-                ],
+                "mail.injection_queue",
+                [["create_uid", "=", user.userId]],
                 ["id", "subject", "email_from", "date"],
                 {limit: 100, order: "date desc"}
             );
@@ -90,7 +87,7 @@ export class MailInjectionQueueMenu extends Component {
                 // Refresh the view to show the new message in the chatter
                 const thread = this.store.Thread.get({model: resModel, id: resId});
                 if (thread) {
-                    await thread.loadAround(message.id);
+                    await thread.fetchNewMessages();
                 }
             } catch {
                 this.notification.add("Failed to attach email.", {
