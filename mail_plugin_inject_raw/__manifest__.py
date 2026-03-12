@@ -18,8 +18,9 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "mail_plugin_inject_raw/static/src/js/mail_injection_queue.esm.js",
-            "mail_plugin_inject_raw/static/src/xml/mail_injection_queue.xml",
+            "mail_plugin_inject_raw/static/src/js/*.js",
+            "mail_plugin_inject_raw/static/src/xml/*.xml",
+            "mail_plugin_inject_raw/static/src/scss/*.scss",
         ],
     },
 }

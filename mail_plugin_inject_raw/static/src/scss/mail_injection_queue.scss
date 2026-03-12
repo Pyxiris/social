@@ -1,0 +1,15 @@
+.o-mail-NotificationItem-delete {
+    background-color: $o-view-background-color;
+    color: $danger !important;
+    outline: 1px solid rgba($danger, 0.75);
+    outline-offset: -1px;
+    padding: map-get($spacers, 1) / 2;
+
+    &:hover {
+        outline-color: rgba(darken($danger, 10%), 1);
+        color: darken($danger, 10%) !important;
+        background-color: mix($o-view-background-color, $danger, 75%);
+        filter: brightness(1.1);
+        box-shadow: $box-shadow-sm;
+    }
+}

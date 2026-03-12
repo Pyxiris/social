@@ -1,18 +1,19 @@
 /** @odoo-module */
 
 import {Component, onWillStart, useEffect, useState} from "@odoo/owl";
+import {DeletableNotificationItem} from "./deletable_notification_item.esm";
 import {Dropdown} from "@web/core/dropdown/dropdown";
 import {DropdownItem} from "@web/core/dropdown/dropdown_item";
-import {NotificationItem} from "@mail/core/public_web/notification_item";
 import {registry} from "@web/core/registry";
 import {useDiscussSystray} from "@mail/utils/common/hooks";
 import {useDropdownState} from "@web/core/dropdown/dropdown_hooks";
 import {useService} from "@web/core/utils/hooks";
 import {user} from "@web/core/user";
+import {hasTouch} from "@web/core/browser/feature_detection";
 
 export class MailInjectionQueueMenu extends Component {
     static template = "mail_plugin_inject_raw.MailInjectionQueueMenu";
-    static components = {Dropdown, DropdownItem, NotificationItem};
+    static components = {Dropdown, DropdownItem, DeletableNotificationItem};
 
     setup() {
         super.setup();
@@ -27,6 +28,7 @@ export class MailInjectionQueueMenu extends Component {
             messages: [],
             isLoading: false,
         });
+        this.hasTouch = hasTouch;
 
         onWillStart(() => this.fetchMessages());
 
@@ -100,6 +102,20 @@ export class MailInjectionQueueMenu extends Component {
                 "Please open a record form view to attach the email.\nIf open already, try reloading the page.",
                 {type: "warning"}
             );
+        }
+    }
+
+    async deleteMessage(message) {
+        try {
+            await this.orm.call("mail.injection_queue", "discard_message", [
+                message.id,
+            ]);
+            this.state.messages = this.state.messages.filter(
+                (m) => m.id !== message.id
+            );
+            this.notification.add("Message deleted.", {type: "success"});
+        } catch {
+            this.notification.add("Failed to delete message.", {type: "danger"});
         }
     }
 

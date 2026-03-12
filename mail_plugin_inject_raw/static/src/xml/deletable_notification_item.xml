@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="mail_plugin_inject_raw.DeletableNotificationItem"
+        t-inherit="mail.NotificationItem"
+        t-inherit-mode="primary"
+        t-key="'mail.NotificationItem'"
+    >
+        <xpath
+            expr="//div[hasclass('o-mail-NotificationItem-avatarContainer')]"
+            position="replace"
+        />
+        <xpath expr="//span[@t-if='props.hasMarkAsReadButton']" position="after">
+            <span class="position-absolute" t-if="props.onDelete">
+                <span
+                    t-if="rootHover.isHover"
+                    class="bg-view"
+                    t-att-class="{ 'ms-1': !props.muted }"
+                >
+                    <span
+                        class="o-mail-NotificationItem-badge o-discuss-badgeShape d-flex align-items-center justify-content-center mx-1 my-0 rounded fw-bold o-mail-NotificationItem-delete text-600 cursor-pointer shadow-sm position-absolute top-0 end-0 z-1"
+                        title="Delete"
+                        t-on-click.stop="props.onDelete"
+                    >
+                        <i class="fa fa-trash text-danger text-danger" />
+                    </span>
+                </span>
+            </span>
+        </xpath>
+    </t>
+
+</templates>
